@@ -8,6 +8,8 @@ class TrainingCourse(models.Model):
     preview = models.ImageField(upload_to='materials/course/', default='course.png', verbose_name='Превью')
     description = models.TextField(verbose_name='Описание курса')
 
+    owner = models.ForeignKey('users.User', on_delete=models.SET_NULL, verbose_name='Владелец', null=True)
+
     def __str__(self):
         return f'{self.title} {self.description}'
 
@@ -23,6 +25,7 @@ class Lesson(models.Model):
     video_url = models.CharField(max_length=250, null=True, blank=True, verbose_name='Ссылка на видео')
 
     course = models.ForeignKey(TrainingCourse, on_delete=models.CASCADE, verbose_name='Курс', related_name='lesson')
+    owner = models.ForeignKey('users.User', on_delete=models.SET_NULL, verbose_name='Владелец', null=True)
 
     def __str__(self):
         return f'{self.title} {self.description} {self.course}'

@@ -27,9 +27,9 @@ class Payments(models.Model):
                                       verbose_name='способ оплаты')
 
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name='пользователь')
-    paid_course = models.OneToOneField(TrainingCourse, on_delete=models.CASCADE, null=True, blank=True,
+    paid_course = models.ForeignKey(TrainingCourse, on_delete=models.CASCADE, null=True, blank=True,
                                        verbose_name='оплаченный курс')
-    paid_lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, null=True, blank=True,
+    paid_lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True,
                                        verbose_name='оплаченный урок')
 
     def __str__(self):
