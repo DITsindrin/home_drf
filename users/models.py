@@ -8,6 +8,7 @@ from materials.models import TrainingCourse, Lesson
 # Create your models here.
 
 class User(AbstractUser):
+    """"Модель пользователя"""
     username = None
     email = models.EmailField(unique=True, verbose_name='Email')
     is_active = models.BooleanField(default=False, verbose_name='Признак верификации')
@@ -21,6 +22,7 @@ class User(AbstractUser):
 
 
 class Payments(models.Model):
+    """"Модель платежи"""
     date_payment = models.DateTimeField(default=timezone.now, verbose_name='дата оплаты')
     payment_amount = models.IntegerField(verbose_name='сумма оплаты')
     payment_method = models.CharField(max_length=35, choices=(('cash', 'наличными'), ('card', 'картой')),

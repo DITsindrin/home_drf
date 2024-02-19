@@ -5,12 +5,14 @@ from materials.models import TrainingCourse, Lesson
 
 
 class LessonSerializer(serializers.ModelSerializer):
+    """Сериалайзер для модели Lesson"""
     class Meta:
         model = Lesson
         fields = ('title', 'description', 'video_url', 'course',)
 
 
 class TrainingCourseSerializer(serializers.ModelSerializer):
+    """Сериалайзер для модели Lesson"""
     lesson_count = SerializerMethodField()
     lesson = LessonSerializer(many=True, read_only=True)
 

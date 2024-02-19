@@ -16,17 +16,37 @@ class Command(BaseCommand):
     print(user_queryset)
 
     def handle(self, *args, **options):
+        # payments_list = [
+        #     {'payment_amount': 5600, 'payment_method': 'cash', 'user': self.user_queryset[0],
+        #      "paid_lesson": self.lesson_queryset[0]},
+        #     {'payment_amount': 5600, 'payment_method': 'cash', 'user': self.user_queryset[0],
+        #      "paid_lesson": self.lesson_queryset[1]},
+        #     {'payment_amount': 5600, 'payment_method': 'cash', 'user': self.user_queryset[0],
+        #      "paid_lesson": self.lesson_queryset[2]},
+        #     {'payment_amount': 25000, 'payment_method': 'card', 'user': self.user_queryset[1],
+        #      "paid_course": self.course_queryset},
+        #
+        # ]
         payments_list = [
-            {'payment_amount': 5600, 'payment_method': 'cash', 'user': self.user_queryset[0],
-             "paid_lesson": self.lesson_queryset[0]},
-            {'payment_amount': 5600, 'payment_method': 'cash', 'user': self.user_queryset[0],
-             "paid_lesson": self.lesson_queryset[1]},
-            {'payment_amount': 5600, 'payment_method': 'cash', 'user': self.user_queryset[0],
-             "paid_lesson": self.lesson_queryset[2]},
-            {'payment_amount': 25000, 'payment_method': 'card', 'user': self.user_queryset[1],
-             "paid_course": self.course_queryset},
+            {
+                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
+                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок', 'course': self.course_queryset}
+             },
+            {
+                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
+                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок', 'course': self.course_queryset}
+            },
+            {
+                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
+                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок', 'course': self.course_queryset}
+            },
+            {
+                'payment_amount': 25000, 'payment_method': 'card', 'user': {'email': 'test@mail.ru', 'password': 12345},
+                'paid_course': {'title': 'Новый курс', 'description': 'Хороший курс'}
+            },
 
         ]
+
 
         payments_for_create = []
         for payment in payments_list:

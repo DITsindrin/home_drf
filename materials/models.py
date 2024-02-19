@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 
 class TrainingCourse(models.Model):
+    """"Модель Курсов"""
     title = models.CharField(max_length=150, verbose_name='Название курса')
     preview = models.ImageField(upload_to='materials/course/', default='course.png', verbose_name='Превью')
     description = models.TextField(verbose_name='Описание курса')
@@ -19,6 +20,7 @@ class TrainingCourse(models.Model):
 
 
 class Lesson(models.Model):
+    """"Модель Уроков"""
     title = models.CharField(max_length=150, verbose_name='Название курса')
     description = models.TextField(verbose_name='Описание курса')
     preview = models.ImageField(upload_to='materials/lesson/', default='lesson.png', verbose_name='Превью')
