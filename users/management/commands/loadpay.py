@@ -29,24 +29,25 @@ class Command(BaseCommand):
         # ]
         payments_list = [
             {
-                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
-                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок', 'course': self.course_queryset}
-             },
-            {
-                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
-                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок', 'course': self.course_queryset}
-            },
-            {
-                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
-                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок', 'course': self.course_queryset}
-            },
-            {
                 'payment_amount': 25000, 'payment_method': 'card', 'user': {'email': 'test@mail.ru', 'password': 12345},
                 'paid_course': {'title': 'Новый курс', 'description': 'Хороший курс'}
             },
-
+            {
+                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
+                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок',
+                                'course': self.course_queryset}
+            },
+            {
+                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
+                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок',
+                                'course': self.course_queryset}
+            },
+            {
+                'payment_amount': 5600, 'payment_method': 'cash', 'user': {'email': 'tset@mail.ru', 'password': 12345},
+                'paid_lesson': {'title': 'Четвертый урок', 'description': 'Хороший урок',
+                                'course': self.course_queryset}
+            },
         ]
-
 
         payments_for_create = []
         for payment in payments_list:
