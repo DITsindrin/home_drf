@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from materials.models import TrainingCourse, Lesson
+from materials.models import TrainingCourse, Lesson, Subscription
+from materials.paginators import TrainingCoursePaginator, LessonPaginator
 from materials.permissions import IsModer, IsOwner
-from materials.serializers import TrainingCourseSerializer, LessonSerializer
+from materials.serializers import TrainingCourseSerializer, LessonSerializer, SubscriptionSerializer
 
 
 # Create your views here.
@@ -14,6 +18,7 @@ class TrainingCourseViewSet(viewsets.ModelViewSet):
     """CRUD для объектов модели TrainingCourse """
     serializer_class = TrainingCourseSerializer
     queryset = TrainingCourse.objects.all()
+    pagination_class = TrainingCoursePaginator
 
     def perform_create(self, serializer):
         """Метод для записи поля owner при создании объекта TrainingCourse"""
@@ -48,6 +53,7 @@ class LessonListAPIView(generics.ListAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated, IsModer | IsOwner]
+    pagination_class = LessonPaginator
 
     def get_queryset(self):
         """Метод для фильтрации списка выводимых уроков по полю owner"""
@@ -72,3 +78,30 @@ class LessonDestroyAPIView(generics.DestroyAPIView):
     """Удаление объекта модели Lesson """
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
+
+
+class SubscriptionView(APIView):
+    """ Удаление и установка подписк на курс для пользователя """
+
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        print(user.email)
+        curse_id = self.request.data.get('course')
+        print(curse_id)
+        curse_item = get_object_or_404(TrainingCourse, pk=curse_id)
+        print(curse_item)
+
+        subs_item = Subscription.objects.filter(user=user).filter(course=curse_id).all()
+
+        if subs_item.exists():
+            subs_item.delete()
+            message = 'Подписка на курс удалена'
+        else:
+            Subscription.objects.create(user=user, course=curse_item)
+            message = 'Подписка на курс добавлена'
+
+        return Response({'message': message})

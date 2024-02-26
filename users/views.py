@@ -40,7 +40,7 @@ class UserRetrieveAPIView(generics.RetrieveAPIView):
     queryset = User.objects.all()
 
     def get_serializer_class(self):
-        """Метод выбора сериолайзера из в зависимости от условий"""
+        """Метод выбора сериолайзера в зависимости от условий"""
         if self.request.user == super().get_object():
             self.serializer_class = UserSerializer
             return self.serializer_class
