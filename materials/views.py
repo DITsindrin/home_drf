@@ -85,7 +85,7 @@ class SubscriptionView(APIView):
 
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
