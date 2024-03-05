@@ -12,6 +12,14 @@ class PaymentsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PaymentsCreateSerializer(serializers.ModelSerializer):
+    """Сериалайзер для модели Payments"""
+
+    class Meta:
+        model = Payments
+        fields = ('paid_course', 'paid_lesson', 'url_for_payment', 'payment_id',)
+
+
 class UserSerializer(serializers.ModelSerializer):
     """Сериалайзер для модели User c полем платежи"""
     payment = PaymentsSerializer(source='payments_set', many=True)

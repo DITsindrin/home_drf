@@ -6,7 +6,7 @@ from users.apps import UsersConfig
 from rest_framework.routers import DefaultRouter
 
 from users.views import PaymentsListAPIView, UserRegisterAPIView, UserListAPIView, UserRetrieveAPIView, \
-    UserUpdateAPIView, UserDeleteView
+    UserUpdateAPIView, UserDeleteView, PaymentsCreateAPIView
 
 app_name = UsersConfig.name
 
@@ -25,4 +25,5 @@ urlpatterns = [
     path('update/<int:pk>', UserUpdateAPIView.as_view(), name='user-update'),
     path('delete/<int:pk>', UserDeleteView.as_view(), name='user-delete'),
     path('payment/', PaymentsListAPIView.as_view(), name='payment-list'),
+    path('payment/create/', PaymentsCreateAPIView.as_view(), name='payment-create'),
 ]

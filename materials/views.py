@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -87,6 +89,12 @@ class SubscriptionView(APIView):
     serializer_class = SubscriptionSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
+    user = openapi.Parameter('user', openapi.IN_QUERY, description="user_id", type=openapi.TYPE_NUMBER)
+    course = openapi.Parameter('course', openapi.IN_QUERY, description="course_id", type=openapi.TYPE_NUMBER)
+
+    @swagger_auto_schema(operation_description="Удаление и установка подписк на курс для пользователя",
+                         manual_parameters=[user, course],
+                         responses={200: 'Подписка на курс удалена/Подписка на курс добавлена'})
     def post(self, request, *args, **kwargs):
         user = self.request.user
         print(user.email)

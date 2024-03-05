@@ -6,7 +6,8 @@ from rest_framework.permissions import AllowAny
 
 from users.models import User, Payments
 from users.serializers import UserSerializer, UserRegisterSerializer, UserListSerializer, PaymentsSerializer, \
-    UserPublicRetrieveSerializer
+    UserPublicRetrieveSerializer, PaymentsCreateSerializer
+from users.services import create_stripe_product, create_stripe_price, create_stripe_session
 
 
 # Create your views here.
@@ -72,3 +73,35 @@ class PaymentsListAPIView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ('paid_course', 'paid_lesson', 'payment_method',)
     ordering_fields = ('date_payment',)
+
+
+class PaymentsCreateAPIView(generics.CreateAPIView):
+    """Вывод всех объектов модели Payments"""
+    serializer_class = PaymentsCreateSerializer
+
+    def perform_create(self, serializer):
+        a = serializer.validated_data
+        print(a)
+        # course = serializer.validated_data['paid_course']
+        # lesson = serializer.validated_data['paid_lesson']
+        payment_method = 'card'
+        if serializer.validated_data['paid_course']:
+            course = serializer.validated_data['paid_course']
+            stripe_product_id = create_stripe_product(course.title)
+            stripe_price_id = create_stripe_price(course.price, stripe_product_id)
+            payment_amount = course.price
+        elif serializer.validated_data['paid_lesson']:
+            lesson = serializer.validated_data['paid_lesson']
+            stripe_product_id = create_stripe_product(lesson.title)
+            stripe_price_id = create_stripe_price(lesson.price, stripe_product_id)
+            payment_amount = lesson.price
+
+        url_for_payment, payment_id = create_stripe_session(stripe_price_id)
+        if course:
+            serializer.save(payment_amount=payment_amount, url_for_payment=url_for_payment, payment_id=payment_id,
+                            paid_course=course, user=self.request.user, payment_method=payment_method,
+                            product_stripe_id=stripe_product_id)  # расширить модель
+        elif lesson:
+            serializer.save(payment_amount=payment_amount, url_for_payment=url_for_payment, payment_id=payment_id,
+                            paid_lesson=lesson, user=self.request.user, payment_method=payment_method,
+                            product_stripe_id=stripe_product_id)
