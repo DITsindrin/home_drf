@@ -15,7 +15,7 @@ def create_stripe_price(payment_amount, stripe_product_id):
     """ Создание цены в stripe. Принимает стоимость продукта из модели уроков или курса и id продукта stripe, возвращает id цены stripe """
     stripe_price = stripe.Price.create(
         currency='rub',
-        unit_amount=payment_amount,
+        unit_amount=payment_amount * 100,
         product_data={'name': stripe_product_id},
     )
     return stripe_price.id

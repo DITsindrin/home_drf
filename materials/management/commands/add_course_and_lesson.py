@@ -15,6 +15,7 @@ test_lessons = [
         "description": "Decsription for lesson 1",
         "video_url": "www.testlink1.com",
         "owner_id": 1,
+        "course_id": 1,
     },
     {
         "user_id": 1,
@@ -22,6 +23,7 @@ test_lessons = [
         "description": "Decsription for lesson 2",
         "video_url": "www.testlink2.com",
         "owner_id": 1,
+        "course_id": 1,
     },
     {
         "user_id": 1,
@@ -29,6 +31,7 @@ test_lessons = [
         "description": "Decsription for lesson 3",
         "video_url": "www.testlink3.com",
         "owner_id": 1,
+        "course_id": 1,
     },
     {
         "user_id": 1,
@@ -36,6 +39,7 @@ test_lessons = [
         "description": "Decsription for lesson 4",
         "video_url": "www.testlink4.com",
         "owner_id": 1,
+        "course_id": 1,
     },
     {
         "user_id": 1,
@@ -43,6 +47,7 @@ test_lessons = [
         "description": "Decsription for lesson 5",
         "video_url": "www.testlink5.com",
         "owner_id": 1,
+        "course_id": 1,
     },
     {
         "user_id": 1,
@@ -50,6 +55,7 @@ test_lessons = [
         "description": "Decsription for lesson 6",
         "video_url": "www.testlink6.com",
         "owner_id": 1,
+        "course_id": 1,
     },
 ]
 
