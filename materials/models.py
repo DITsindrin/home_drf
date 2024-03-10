@@ -8,6 +8,7 @@ class TrainingCourse(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название курса')
     preview = models.ImageField(upload_to='materials/course/', default='course.png', verbose_name='Превью')
     description = models.TextField(verbose_name='Описание курса')
+    last_update = models.DateTimeField(auto_now=True, null=True, blank=True, verbose_name='последнее обновление')
 
     owner = models.ForeignKey('users.User', on_delete=models.SET_NULL, verbose_name='Владелец', null=True)
     price = models.PositiveIntegerField(default=10000, verbose_name='Цена курса')

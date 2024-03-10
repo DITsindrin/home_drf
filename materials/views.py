@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import timezone
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, generics
@@ -11,7 +12,7 @@ from materials.models import TrainingCourse, Lesson, Subscription
 from materials.paginators import TrainingCoursePaginator, LessonPaginator
 from materials.permissions import IsModer, IsOwner
 from materials.serializers import TrainingCourseSerializer, LessonSerializer, SubscriptionSerializer
-
+from materials.tasks import update_course_notification
 
 # Create your views here.
 
@@ -37,6 +38,13 @@ class TrainingCourseViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAuthenticated, IsModer | IsOwner]
 
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        course = serializer.save()
+        course_id = course.id
+        course.last_update = timezone.now()
+
+        update_course_notification.delay(course_id)
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
